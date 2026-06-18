@@ -3,109 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Dashboard Assignment</title>
-    <style>
-        /* Consistent & Clean Styling */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        select {
-            width: 100%;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-            margin-bottom: 20px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        select:focus {
-            border-color: #3498db;
-        }
-
-        /* Weather Display Area */
-        .weather-card {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #ecf0f1;
-            display: none; /* Hidden by default until API data loads */
-        }
-
-        .weather-card h2 {
-            margin: 0 0 10px 0;
-            color: #34495e;
-        }
-
-        .temp {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin: 10px 0;
-            color: #e67e22;
-        }
-
-        .desc {
-            text-transform: capitalize;
-            font-style: italic;
-            color: #7f8c8d;
-        }
-
-        .error-message {
-            color: #e74c3c;
-            margin-top: 15px;
-            display: none;
-        }
-    </style>
+    <title>My Favourite Animes!</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
-        <h1>Local Weather Viewer</h1>
+        <h1>These are my favourite animes!</h1>
         
-        <label for="location-select">Choose a City:</label>
-        <select id="location-select">
-            <option value="" disabled selected>-- Select a Location --</option>
-            <option value="Toronto">Toronto</option>
-            <option value="New York">New York</option>
-            <option value="London">London</option>
-            <option value="Tokyo">Tokyo</option>
+        <label for="anime-select">Select an Anime:</label>
+        <select id="anime-select">
+            <option value="" disabled selected>-- Choose a Series --</option>
+            <option value="20">Naruto</option>
+            <option value="1735">Naruto Shippuden</option>
+            <option value="223">Dragon Ball</option>
+            <option value="21">One Piece</option>
         </select>
 
-        <div id="weather-card" class="weather-card">
-            <h2 id="city-name">City Name</h2>
-            <img id="weather-icon" src="" alt="Weather Icon">
-            <div id="temperature" class="temp">--°C</div>
-            <div id="description" class="desc">--</div>
+        <div id="anime-card" class="anime-card">
+            <h2 id="anime-title">Title</h2>
+            <img id="anime-poster" class="anime-poster" src="" alt="Anime Poster">
+            <div id="anime-score" class="score">--/10</div>
+            <div id="anime-episodes" class="episodes">-- Episodes</div>
+            <div id="anime-synopsis" class="synopsis">--</div>
         </div>
 
         <div id="error-box" class="error-message"></div>

@@ -1,58 +1,50 @@
-const API_KEY = 'c0a80a51624e46288f5210543261206'; 
+const JIKAN_URL = 'https://api.jikan.moe/v4/anime';
 
-// DOM Elements Selection
-const locationSelect = document.getElementById('location-select');
-const weatherCard = document.getElementById('weather-card');
-const cityName = document.getElementById('city-name');
-const weatherIcon = document.getElementById('weather-icon');
-const temperature = document.getElementById('temperature');
-const description = document.getElementById('description');
+const animeSelect = document.getElementById('anime-select');
+const animeCard = document.getElementById('anime-card');
+const animeTitle = document.getElementById('anime-title');
+const animePoster = document.getElementById('anime-poster');
+const animeScore = document.getElementById('anime-score');
+const animeEpisodes = document.getElementById('anime-episodes');
+const animeSynopsis = document.getElementById('anime-synopsis');
 const errorBox = document.getElementById('error-box');
 
-// Event Listener for interactive dropdown changes
-locationSelect.addEventListener('change', function() {
-    const selectedCity = locationSelect.value;
-    if (selectedCity) {
-        fetchWeatherData(selectedCity);
+animeSelect.addEventListener('change', function() {
+    const selectedId = animeSelect.value;
+    if (selectedId) {
+        fetchAnimeData(selectedId);
     }
 });
 
-/**
- * Fetches data from WeatherAPI and updates the DOM
- * @param {string} city 
- */
-function fetchWeatherData(city) {
-    const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${encodeURIComponent(city)}&aqi=no`;
+function fetchAnimeData(animeId) {
+    const url = `${JIKAN_URL}/${animeId}`;
 
     fetch(url)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok or API key is invalid.');
+                throw new Error('Could not fetch data from MyAnimeList.');
             }
             return response.json();
         })
-        .then(data => {
-            // Hide error box if a previous error occurred
+        .then(responseBody => {
+            const anime = responseBody.data;
+
             errorBox.style.display = 'none';
 
-            // JS DOM Manipulation to display returned API data
-            cityName.textContent = data.location.name;
-            temperature.textContent = `${data.current.temp_c}°C`;
-            description.textContent = data.current.condition.text;
+            animeTitle.textContent = anime.title;
+            animeScore.textContent = anime.score ? `⭐ ${anime.score} / 10` : '⭐ N/A';
+            animeEpisodes.textContent = `Total Episodes: ${anime.episodes || 'Ongoing'}`;
+            animeSynopsis.textContent = anime.synopsis || 'No synopsis available for this title.';
             
-            // Displaying image based on weather icon
-            // Note: weatherapi.com icon URLs start with "//", so adding "https:" ensures it loads correctly
-            weatherIcon.src = `https:${data.current.condition.icon}`;
-            weatherIcon.alt = data.current.condition.text;
+            animePoster.src = anime.images.jpg.image_url;
+            animePoster.alt = anime.title;
 
-            // Make the results visible smoothly
-            weatherCard.style.display = 'block';
+            animeCard.style.display = 'block';
         })
         .catch(error => {
             console.error('Fetch error:', error);
-            // Hide weather card and show error to user
-            weatherCard.style.display = 'none';
-            errorBox.textContent = 'Failed to load weather data. Please check your API key.';
+            animeCard.style.display = 'none';
+            errorBox.textContent = 'Failed to load data. Please wait a second and try again.';
             errorBox.style.display = 'block';
         });
 }
